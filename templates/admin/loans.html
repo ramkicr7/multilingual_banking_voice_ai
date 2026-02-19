@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Loan Requests</h2>
+
+<table class="table table-striped shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>User</th>
+            <th>Loan Type</th>
+            <th>Amount</th>
+            <th>Salary</th>
+            <th>CIBIL</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for loan in loans %}
+        <tr>
+            <td>{{ loan.loan_user.full_name }}</td>
+            <td>{{ loan.loan_type }}</td>
+            <td>₹ {{ loan.amount }}</td>
+            <td>₹ {{ loan.salary }}</td>
+            <td>{{ loan.cibil_score }}</td>
+            <td>
+                {% if loan.status == "Approved" %}
+                    <span class="badge bg-success">Approved</span>
+                {% elif loan.status == "Rejected" %}
+                    <span class="badge bg-danger">Rejected</span>
+                {% else %}
+                    <span class="badge bg-warning">Pending</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if loan.status == "Pending" %}
+                <a href="{{ url_for('admin.approve_loan', loan_id=loan.id) }}"
+                   class="btn btn-primary btn-sm">
+                    Process
+                </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

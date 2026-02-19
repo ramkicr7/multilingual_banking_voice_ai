@@ -1,0 +1,60 @@
+body {
+    background: #f4f7fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar {
+    background: #0d3c61;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.table {
+    background: white;
+}
+
+.btn-primary {
+    background: #0d3c61;
+}
+
+.btn-danger {
+    background: #c0392b;
+}
+
+.btn-success {
+    background: #27ae60;
+}
+/* OTP Card Styling */
+.otp-container {
+    max-width: 400px;
+    margin: 80px auto;
+}
+
+.otp-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.otp-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0d3c61;
+}
+
+.otp-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.otp-btn {
+    width: 100%;
+    padding: 10px;
+}

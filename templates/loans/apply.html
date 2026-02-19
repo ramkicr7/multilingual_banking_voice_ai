@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Loan Application Form</h2>
+
+    <div class="card shadow p-4">
+
+        <form method="POST">
+
+            <!-- Loan Type -->
+            <div class="mb-3">
+                <label class="form-label">Loan Type</label>
+                <select name="loan_type" id="loanType" class="form-select" required onchange="handleLoanType()">
+                    <option value="">Select Loan Type</option>
+                    <option value="personal">Personal Loan</option>
+                    <option value="home">Home Loan</option>
+                    <option value="gold">Gold Loan</option>
+                </select>
+            </div>
+
+            <!-- GOLD LOAN SECTION -->
+            <div id="goldSection" style="display:none;">
+
+                <div class="mb-3">
+                    <label class="form-label">Gold Weight (in grams)</label>
+                    <input type="number" id="goldWeight" name="gold_weight"
+                           class="form-control"
+                           min="1"
+                           oninput="calculateGoldLoan()">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Eligible Loan Amount (₹)</label>
+                    <input type="number" id="goldAmount"
+                           name="amount"
+                           class="form-control"
+                           readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Weekly Repayment (10%)</label>
+                    <input type="text"
+                           id="weeklyRepayment"
+                           class="form-control"
+                           readonly>
+                </div>
+
+            </div>
+
+            <!-- NORMAL LOAN SECTION -->
+            <div id="normalSection">
+
+                <!-- Loan Amount -->
+                <div class="mb-3">
+                    <label class="form-label">Requested Loan Amount (₹)</label>
+                    <input type="number" name="amount" class="form-control">
+                </div>
+
+                <!-- Monthly Salary -->
+                <div class="mb-3">
+                    <label class="form-label">Monthly Salary (₹)</label>
+                    <input type="number" name="salary" class="form-control">
+                </div>
+
+                <!-- CIBIL Score -->
+                <div class="mb-3">
+                    <label class="form-label">CIBIL Score</label>
+                    <input type="number"
+                           name="cibil"
+                           min="300"
+                           max="900"
+                           class="form-control">
+                </div>
+
+            </div>
+
+            <!-- Purpose -->
+            <div class="mb-3">
+                <label class="form-label">Purpose of Loan</label>
+                <textarea name="purpose"
+                          class="form-control"
+                          rows="3"
+                          required></textarea>
+            </div>
+
+            <!-- Submit -->
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">
+                    Submit Application
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ===================== JAVASCRIPT ===================== -->
+
+<script>
+
+function handleLoanType() {
+
+    let type = document.getElementById("loanType").value;
+    let goldSection = document.getElementById("goldSection");
+    let normalSection = document.getElementById("normalSection");
+
+    if (type === "gold") {
+        goldSection.style.display = "block";
+        normalSection.style.display = "none";
+    } else {
+        goldSection.style.display = "none";
+        normalSection.style.display = "block";
+    }
+}
+
+
+function calculateGoldLoan() {
+
+    let weight = document.getElementById("goldWeight").value;
+
+    if (weight > 0) {
+
+        let amount = weight * 10000;  // ₹10,000 per gram
+        let weekly = amount * 0.10;   // 10% weekly repayment
+
+        document.getElementById("goldAmount").value = amount;
+        document.getElementById("weeklyRepayment").value = "₹ " + weekly + " per week";
+
+    } else {
+        document.getElementById("goldAmount").value = "";
+        document.getElementById("weeklyRepayment").value = "";
+    }
+}
+
+</script>
+
+{% endblock %}

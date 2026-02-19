@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4 mx-auto" style="max-width: 450px;">
+
+        <h4 class="text-center mb-4">Net Banking Login</h4>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <label class="form-label">NetBanking ID</label>
+                <input type="text"
+                       name="netbank_id"
+                       class="form-control"
+                       placeholder="Enter NetBanking ID"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">NetBanking Password</label>
+                <input type="password"
+                       name="netbank_password"
+                       class="form-control"
+                       placeholder="Enter Password"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

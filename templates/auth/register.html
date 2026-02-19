@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow p-4">
+
+<h3 class="text-center mb-4">Open RMBI Account</h3>
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Full Name</label>
+<input type="text" name="full_name" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Email</label>
+<input type="email" name="email" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Phone Number</label>
+<input type="text" name="phone" class="form-control" maxlength="10" required>
+</div>
+
+<div class="mb-3">
+<label>Aadhaar Number</label>
+<input type="text" name="aadhaar" class="form-control" maxlength="12" required pattern="\d{12}">
+<small class="text-muted">Enter 12-digit Aadhaar number</small>
+</div>
+
+<div class="mb-3">
+<label>Password</label>
+<input type="password" name="password" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label>Account Type</label>
+<select name="account_type" id="account_type" class="form-select" onchange="toggleGuardian()">
+<option value="savings">Savings</option>
+<option value="current">Current</option>
+<option value="joint">Joint</option>
+<option value="minor">Minor</option>
+</select>
+</div>
+
+<!-- Guardian Field (Visible only if Minor selected) -->
+<div class="mb-3" id="guardian_field" style="display:none;">
+<label>Guardian Aadhaar (Required for Minor)</label>
+<input type="text" name="guardian_aadhaar" class="form-control" maxlength="12">
+</div>
+
+<button class="btn btn-success w-100">Register</button>
+
+</form>
+
+</div>
+</div>
+</div>
+
+{% endblock %}

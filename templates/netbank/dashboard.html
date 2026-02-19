@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">Net Banking Dashboard</h2>
+
+    <!-- Balance Card -->
+    <div class="card p-4 shadow mb-4 text-center">
+        <h5 class="text-muted">Available Balance</h5>
+        <h2 class="text-success">₹ {{ account.balance }}</h2>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success text-center" id="successAlert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Start Transfer Button -->
+    <div class="text-center mb-4">
+        <a href="{{ url_for('netbank.transfer_page') }}" 
+           class="btn btn-primary btn-lg">
+            💸 Start Money Transfer
+        </a>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="card p-4 shadow">
+
+        <h5 class="mb-3">Recent Transactions</h5>
+
+        {% if transactions %}
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Balance After</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for txn in transactions %}
+                <tr>
+                    <td>
+                        {% if txn.transaction_type == "transfer_sent" %}
+                            <span class="text-danger">Sent</span>
+                        {% elif txn.transaction_type == "transfer_received" %}
+                            <span class="text-success">Received</span>
+                        {% else %}
+                            {{ txn.transaction_type }}
+                        {% endif %}
+                    </td>
+                    <td>₹ {{ txn.amount }}</td>
+                    <td>₹ {{ txn.balance_after }}</td>
+                    <td>{{ txn.timestamp.strftime('%d-%m-%Y %H:%M') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info text-center">
+            No transactions yet.
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- SUCCESS SOUND -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const successAlert = document.getElementById("successAlert");
+    if (successAlert) {
+        const audio = new Audio("/static/success.m4a");
+        audio.play().catch(err => console.log("Autoplay blocked"));
+    }
+});
+</script>
+
+{% endblock %}
